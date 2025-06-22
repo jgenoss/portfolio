@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JGenoss - Desarrollador Freelance | Soluciones Tecnológicas Eficientes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-cyan: #00ffff;
+            --dark-cyan: #00cccc;
+            --light-cyan: #66ffff;
+            --bg-dark: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #202020;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --gradient-main: linear-gradient(135deg, #00ffff 0%, #0099cc 100%);
+            --shadow-glow: 0 0 20px rgba(0, 255, 255, 0.3);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .matrix-rain {
+            position: absolute;
+            color: var(--primary-cyan);
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            animation: rain 10s linear infinite;
+        }
+
+        @keyframes rain {
+            0% { top: -10px; opacity: 1; }
+            100% { top: 100vh; opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-cyan);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-main);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.8)); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-main);
+            color: var(--bg-dark);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-cyan);
+            border: 2px solid var(--primary-cyan);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-cyan);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gradient-main);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .skill-category:hover::before {
+            left: 100%;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--primary-cyan);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--primary-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-cyan);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .skill-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--primary-cyan);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--primary-cyan);
+        }
+
+        .project-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 153, 204, 0.1));
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-cyan);
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 255, 255, 0.2);
+            color: var(--primary-cyan);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary-cyan);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--light-cyan);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--primary-cyan);
+            border-color: var(--primary-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal Animation */
+        .terminal {
+            background: #000;
+            border: 1px solid var(--primary-cyan);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 2rem 0;
+            font-family: 'Fira Code', monospace;
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red { background: #ff5555; }
+        .btn-yellow { background: #ffff55; }
+        .btn-green { background: #55ff55; }
+
+        .terminal-line {
+            color: var(--primary-cyan);
+            margin: 0.5rem 0;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-cyan);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--light-cyan);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo code-font">JGenoss</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1 class="hero-title code-font">JGenoss</h1>
+            <p class="hero-subtitle">Desarrollador Freelance • Ingeniería de Software</p>
+            <p class="hero-description">
+                Especializado en soluciones tecnológicas eficientes para empresas, juegos y sistemas personalizados. 
+                Con años de experiencia en desarrollo backend, frontend, seguridad e ingeniería inversa.
+            </p>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-btn btn-red"></div>
+                    <div class="terminal-btn btn-yellow"></div>
+                    <div class="terminal-btn btn-green"></div>
+                </div>
+                <div class="terminal-line">$ whoami</div>
+                <div class="terminal-line">jgenoss@system:~$ cat profile.txt</div>
+                <div class="terminal-line">Fullstack Developer | Security Expert | Reverse Engineer</div>
+                <div class="terminal-line">Languages: Python, C++, C#, PHP, JS, Assembly</div>
+                <div class="terminal-line">Frameworks: Flask, Vue.js, Bootstrap</div>
+                <div class="terminal-line">Motto: "Soluciones tecnológicas eficientes"<span class="cursor">|</span></div>
+            </div>
+
+            <div class="hero-cta">
+                <a href="#proyectos" class="btn btn-primary">Ver Proyectos</a>
+                <a href="#contacto" class="btn btn-secondary">Contactar</a>
+            </div>
+        </div>
+
+        <!-- Floating particles -->
+        <div class="particle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="top: 60%; left: 90%; animation-delay: 2s;"></div>
+        <div class="particle" style="top: 80%; left: 20%; animation-delay: 4s;"></div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="habilidades">
+        <div class="container">
+            <h2 class="section-title">Stack Técnico</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <i class="fas fa-server skill-icon"></i>
+                    <h3 class="skill-title">Backend Development</h3>
+                    <ul class="skill-list">
+                        <li>Flask (Python) - APIs REST seguras</li>
+                        <li>PHP personalizado</li>
+                        <li>MySQL / SQLite</li>
+                        <li>Arquitectura escalable</li>
+                        <li>Validación completa</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <i class="fas fa-code skill-icon"></i>
+                    <h3 class="skill-title">Frontend Development</h3>
+                    <ul class="skill-list">
+                        <li>Vue.js - SPA modernas</li>
+                        <li>JavaScript ES6+</li>
+                        <li>Bootstrap - UI responsiva</li>
+                        <li>Axios - Integración API</li>
+                        <li>CSS3 / SASS</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <i class="fas fa-shield-alt skill-icon"></i>
+                    <h3 class="skill-title">Sistemas Avanzados</h3>
+                    <ul class="skill-list">
+                        <li>Ingeniería inversa de software</li>
+                        <li>Desarrollo en C++ y Assembly</li>
+                        <li>Sistemas de seguridad</li>
+                        <li>Anticheat y protección</li>
+                        <li>Reparación de emuladores</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <i class="fas fa-robot skill-icon"></i>
+                    <h3 class="skill-title">Automatización</h3>
+                    <ul class="skill-list">
+                        <li>Web Scraping con Python</li>
+                        <li>Launchers personalizados</li>
+                        <li>Sistemas de actualización</li>
+                        <li>Testing automatizado</li>
+                        <li>Deploy automático</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <i class="fas fa-tools skill-icon"></i>
+                    <h3 class="skill-title">Herramientas</h3>
+                    <ul class="skill-list">
+                        <li>Git / GitHub</li>
+                        <li>Postman - API testing</li>
+                        <li>Visual Studio / VS Code</li>
+                        <li>Windows / Linux</li>
+                        <li>Docker containers</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <i class="fas fa-gamepad skill-icon"></i>
+                    <h3 class="skill-title">Especialización Gaming</h3>
+                    <ul class="skill-list">
+                        <li>Launchers de videojuegos</li>
+                        <li>Sistemas anti-cheat</li>
+                        <li>Emuladores y parches</li>
+                        <li>Debugging avanzado</li>
+                        <li>Controladores de hardware</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="proyectos">
+        <div class="container">
+            <h2 class="section-title">Proyectos Destacados</h2>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">API_Y_LAUNCHER</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">MySQL</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Sistema completo de launcher para videojuegos con API REST segura, 
+                            autenticación de usuarios y sistema de actualización automática.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/jgenoss/API_Y_LAUNCHER" class="project-link">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Sistema AntiCheat</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Assembly</span>
+                            <span class="tech-tag">Security</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Sistema avanzado de detección y prevención de cheats para videojuegos, 
+                            implementado con técnicas de bajo nivel y análisis de comportamiento.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/jgenoss/anticheat" class="project-link">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Hook System</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">WinAPI</span>
+                            <span class="tech-tag">Reverse Engineering</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Sistema de hooks para ingeniería inversa y análisis de software, 
+                            con capacidades de interceptación de funciones y modificación en tiempo real.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/jgenoss/Hook" class="project-link">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Sistema de Control</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Automation</span>
+                            <span class="tech-tag">API</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Plataforma de control y monitoreo para sistemas distribuidos, 
+                            con dashboard web y capacidades de automatización avanzada.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/jgenoss/control" class="project-link">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">App Filter</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Machine Learning</span>
+                            <span class="tech-tag">Data Processing</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Sistema inteligente de filtrado de aplicaciones con análisis automático 
+                            de contenido y clasificación basada en machine learning.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/jgenoss/app_filter" class="project-link">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">DECA Sistema</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">Full Stack</span>
+                            <span class="tech-tag">Database</span>
+                            <span class="tech-tag">Security</span>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-description">
+                            Sistema empresarial completo con gestión de usuarios, reportes avanzados 
+                            y módulos de seguridad integrados para ambientes corporativos.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/jgenoss/deca_sistema" class="project-link">
+                                <i class="fab fa-github"></i> Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contacto">
+        <div class="container">
+            <h2 class="section-title">Conectemos</h2>
+            
+            <div class="contact-content">
+                <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                    ¿Tienes un proyecto en mente? Estoy disponible para crear soluciones tecnológicas 
+                    eficientes que impulsen tu negocio al siguiente nivel.
+                </p>
+                
+                <div class="contact-links">
+                    <a href="mailto:granadilo33@gmail.com" class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                        granadilo33@gmail.com
+                    </a>
+                    <a href="https://github.com/jgenoss" class="contact-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fab fa-discord"></i>
+                        Discord
+                    </a>
+                </div>
+                
+                <div style="margin-top: 3rem; padding: 2rem; background: var(--bg-card); border-radius: 15px; border: 1px solid rgba(0, 255, 255, 0.2);">
+                    <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;">Servicios Disponibles</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; text-align: left;">
+                        <div>
+                            <i class="fas fa-globe" style="color: var(--primary-cyan); margin-right: 0.5rem;"></i>
+                            Desarrollo de plataformas web completas
+                        </div>
+                        <div>
+                            <i class="fas fa-api" style="color: var(--primary-cyan); margin-right: 0.5rem;"></i>
+                            Creación de APIs REST seguras
+                        </div>
+                        <div>
+                            <i class="fas fa-rocket" style="color: var(--primary-cyan); margin-right: 0.5rem;"></i>
+                            Launchers y actualizadores de juegos
+                        </div>
+                        <div>
+                            <i class="fas fa-search" style="color: var(--primary-cyan); margin-right: 0.5rem;"></i>
+                            Ingeniería inversa y debugging
+                        </div>
+                        <div>
+                            <i class="fas fa-cogs" style="color: var(--primary-cyan); margin-right: 0.5rem;"></i>
+                            Automatización de tareas
+                        </div>
+                        <div>
+                            <i class="fas fa-shield-alt" style="color: var(--primary-cyan); margin-right: 0.5rem;"></i>
+                            Sistemas de seguridad avanzados
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Matrix rain animation
+        function createMatrixRain() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const chars = '01';
+            
+            for (let i = 0; i < 50; i++) {
+                const span = document.createElement('span');
+                span.className = 'matrix-rain';
+                span.textContent = chars[Math.floor(Math.random() * chars.length)];
+                span.style.left = Math.random() * 100 + '%';
+                span.style.animationDelay = Math.random() * 10 + 's';
+                span.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                bgAnimation.appendChild(span);
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Terminal typing animation
+        function typeTerminal() {
+            const cursor = document.querySelector('.cursor');
+            if (cursor) {
+                setInterval(() => {
+                    cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+                }, 500);
+            }
+        }
+
+        // Intersection Observer for animations
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.skill-category, .project-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Add floating particles dynamically
+        function addFloatingParticles() {
+            const hero = document.querySelector('.hero');
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                hero.appendChild(particle);
+            }
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createMatrixRain();
+            initSmoothScroll();
+            typeTerminal();
+            initScrollAnimations();
+            addFloatingParticles();
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
